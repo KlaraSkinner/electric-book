@@ -5,12 +5,21 @@
 // recommended structure of this file.
 
 $example-blue: null;
+$orange: null;
+$midnight-blue: null;
+$near-black: null;
 
 @if $output-format != "print-pdf" {
 
     $example-blue: #009ACD !default;
+    $orange: #ff4c00 !default;
+    $midnight-blue: #00587d !default;
+    $near-black: #3b3b3b;
 
 } @else {
 
     $example-blue: cmyk(80%, 20%, 0%, 20%) !default;
+    $orange: cmyk(0%, 70%, 100%, 0%) !default;
+    $midnight-blue: cmyk(100%, 30%, 0%, 51%) !default;
+    $near-black: cmyk(0%, 0%, 0%, 77%) !default;
 }

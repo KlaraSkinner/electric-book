@@ -1,0 +1,16 @@
+.feature-boxes {
+    margin-top: 6rem;
+    margin-bottom: 6rem;
+}
+
+.feature-box {
+    border: 0;
+    text-align: center;
+
+    .feature-box-image-wrapper {
+        border: 0;
+        box-shadow: 0px 0px 15px -5px $grey-mid;
+        height: 7rem;
+        width: 7rem;
+    }
+}

@@ -1,0 +1,25 @@
+// Add Sass variables here that override the template's
+// variables. This is also a good place to set new
+// Sass variables if you need them for your design.
+// The template variables you can override are in
+// _sass/template/*.scss for each output format.
+// ----------------------------------------------
+
+// Colours
+$color-accent: $near-black !default;
+$color-text-main: $near-black !default;
+$color-buttons: $midnight-blue !default;
+
+// Remove or change the font names here for your design.
+$font-text-main: "EB Garamond", "Cambria", "Times", serif !default;
+$font-text-secondary: $font-text-main !default;
+$font-display-main: "Josefin Sans", $font-text-main !default;
+$font-display-secondary: $font-display-main !default;
+
+$font-size-default: 1.4rem !default;
+$line-height-default: 2rem !default;
+
+$nav-bar-accent-color: $grey-mid;
+$nav-bar-label-border-color: $near-black !default;
+
+$footer-text-color: white !default;

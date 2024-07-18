@@ -1,0 +1,15 @@
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-family: $font-text-main;
+}
+
+h1, h2 {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.chapter-number {
+    color: $grey-mid;
+    font-weight: normal;
+    margin-bottom: 1rem;
+}

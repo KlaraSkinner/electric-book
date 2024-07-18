@@ -1,8 +1,9 @@
-# Base design
+# Austen
 
-This folder can contain a base design. Base designs are styles that give your project a personality, and a starting point for further customisation in the `custom` folder.
+A base design for the Electric Book template for novels and story-telling non-fiction.
 
-Your books will include the styles from the folder in `_sass` named `base`, if its files are structured like these ones. So, to add a new base design:
+Austen is a simple, classic layout for comfortable long-form reading. It is meant to be an invisible design, where every choice prioritises an effortless reading experience.
 
-1. Rename this folder from `base` to something else, if you want to keep an empty version. E.g. `base-template`.
-2. Add another, pre-populated base design folder in its place, and rename that folder `base`.
+Page size: 198 x 129 mm (B-format)
+Type: EB Garamond 11/14
+Running heads: Title/Title
