@@ -6,8 +6,28 @@
 
 *{{ title }}*
 
-{% if rightsholder and rightsholder != "" %}© {{ rightsholder }}{% elsif creator and creator != "" %}© {{ creator }}{% endif %}
+First published in 2017
+by Pan Macmillan South Africa
+Private Bag X19
+Northlands
+Johannesburg
+2116
+www.panmacmillan.co.za
 
 {% include identifiers scheme="ISBN" %}
 
+{% if rightsholder and rightsholder != "" %}© {{date}} {{ rightsholder }}{% elsif creator and creator != "" %}© {{date}} {{ creator }}{% endif %}
+
 {{ rights }}
+
+*This is a work of fiction. Any resemblance to actual places or persons, living or dead, is purely coincidental.*
+
+Editing by Nicola Rijsdijk
+
+Proofreading by Kelly Norwood-Young
+
+Design and typesetting by Electric Book Works
+
+Cover design by XX
+
+Printed and bound by XX

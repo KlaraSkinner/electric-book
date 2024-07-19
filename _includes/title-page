@@ -60,6 +60,14 @@ as body text despite CSS rules for em size.
    {% endif %}
 </p>
 
+<p class="title-page-publisher">
+   {% if include.publisher %}
+   {{ include.publisher }}
+   {% else %}
+   {{ publisher }}
+   {% endif %}
+</p>
+
 {% if include.logo %}
 {% include image
    file=include.logo

@@ -21,13 +21,13 @@ description: |
 image: "cover.jpg"
 
 # Publisher, imprint or brand name
-publisher: ""
+publisher: "Macmillan"
 
 # Publisher's website
 publisher-url: ""
 
 # Who owns the copyright?
-rightsholder: ""
+rightsholder: "Gail Schimmel"
 
 # A copyright statement or licence wording
 rights: |
@@ -40,14 +40,14 @@ language: "en"
 
 # Official, original publication date
 # YYYY-MM-DD
-date: ""
+date: "2017"
 
 # Date of last revision
 # YYYY-MM-DD
 modified: ""
 
 # Book type, e.g. Novel, Poetry, Memoir
-type: ""
+type: "Novel"
 
 # Subject areas
 # E.g. BISAC: https://bisg.org/page/BISACEdition
@@ -95,6 +95,7 @@ products:
     # Format
     # e.g. Paperback, Digital download, Digital online
     format: "Ebook" # e.g. Paperback, Digital download, Digital online
+    identifier: "978-1-77010-516-4"
 
   # Details about the screen-PDF version of this work
   screen-pdf:
@@ -102,7 +103,7 @@ products:
     # Format
     # e.g. Paperback, Digital download, Digital online
     format: "PDF" # e.g. Paperback, Digital download, Digital online
-
+    
   # Details about the app version of this work
   app:
 
