@@ -6,6 +6,8 @@ style: previous-publications-page
 # from this book's YML file in _data
 ---
 
+{% include metadata %}
+
 Also by {{ creator }}
 
 *Whatever Happened to the Cowley Twins?* (2013)
