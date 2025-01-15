@@ -10,13 +10,17 @@ $pdf-copyright-page: true !default;
         line-height: $line-height-default * $font-size-smaller;
         hyphens: none;
         text-align: left;
+
         h1, h2, h3, h4, h5, h6 {
             font-family: inherit;
             font-size: inherit;
+            hyphens: none;
             margin: ($line-height-default * 0.5) 0 ($line-height-default * 0.5) 0;
             text-align: inherit;
         }
+
         p, ol, ul {
+            hyphens: none;
             margin: 0 0 ($line-height-default * $font-size-smaller) 0;
             text-align: inherit;
             text-indent: 0;
@@ -24,6 +28,16 @@ $pdf-copyright-page: true !default;
             &:last-child {
                 margin-bottom: 0;
             }
+
+            &.identifier {
+                margin: 0;
+            }
+        }
+
+        .identifiers {
+            list-style-type: none;
+            margin-left: 0;
+            padding-left: 0;
         }
     }
 }

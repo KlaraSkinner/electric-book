@@ -21,6 +21,8 @@
 // This script is not used for PDF and epub outputs.
 // PrinceXML does not 'see' HTML comments at all.
 // So for PrinceXML output, we prerender the HTML with gulp/cheerio.
+// The script is included in PDF outputs so that
+// Puppeteer can use it for indexing PDF outputs.
 // In epub readers, the links don't work from the index
 // because the targets would only exist when the target
 // page is rendered. Browsers handle this fine, but not ereaders.
@@ -57,7 +59,7 @@ function ebIndexProcessComments (comments) {
 
   // If there are no comments, note that in the
   // `data-index-targets` attribute.
-  if (comments.length < 1) {
+  if (comments.length < 1 || !comments) {
     document.body.setAttribute('data-index-targets', 'none')
   }
 
@@ -97,7 +99,7 @@ function ebIndexProcessComments (comments) {
       // https://stackoverflow.com/a/41183617/1781075
       // and remove any leading or trailing hyphens.
       const entriesByLevel = rawEntriesByLevel.map(function (str) {
-        return str.trim().replace(/^-+|-+$/, '')
+        return str.trim().replace(/^~+|~+$/, '')
       })
 
       // Check for starting or ending hyphens.
@@ -112,11 +114,11 @@ function ebIndexProcessComments (comments) {
       let from = false
       let to = false
 
-      if (line.substring(0, 1) === '-') {
+      if (line.substring(0, 1) === '~') {
         to = true
         line = line.substring(1)
       }
-      if (line.substring(line.length - 1) === '-') {
+      if (line.substring(line.length - 1) === '~') {
         from = true
         line = line.substring(0, line.length - 1)
       }
@@ -227,8 +229,8 @@ function ebIndexGetComments () {
 
   const comments = []
 
-  let indexedElement, commentValue, previousElementSibling,
-    nextElementSibling, nextSibling, targetType, targetText
+  let indexedElement, commentValue, nextElementSibling, nextSibling, targetType,
+    targetText
 
   // Regex for testing if a comment is an indexing comment
   const isAnIndexComment = /^\s*index:/
@@ -265,7 +267,6 @@ function ebIndexGetComments () {
     while (treeWalker.nextNode()) {
       if (isAnIndexComment.test(treeWalker.currentNode.nodeValue)) {
         nextSibling = treeWalker.currentNode.nextSibling
-        previousElementSibling = treeWalker.currentNode.previousElementSibling
         nextElementSibling = treeWalker.currentNode.nextElementSibling
 
         // If the previous or next sibling elements of the comment
@@ -277,10 +278,8 @@ function ebIndexGetComments () {
         // then we know that the index target must be inline, i.e.
         // inside a text element like a paragraph.
 
-        if (previousElementSibling !== null &&
-                        nextElementSibling !== null &&
-                        ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName) &&
-                        ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+        if (nextElementSibling !== null &&
+          ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
           indexedElement = treeWalker.currentNode.nextElementSibling
           targetType = 'element'
           targetText = ''
@@ -317,13 +316,10 @@ function ebIndexGetComments () {
         if (thisNode.nodeType === Node.COMMENT_NODE &&
                         isAnIndexComment.test(thisNode.nodeValue)) {
           nextSibling = thisNode.nextSibling
-          previousElementSibling = thisNode.previousElementSibling
           nextElementSibling = thisNode.nextElementSibling
 
-          if (previousElementSibling !== null &&
-                            nextElementSibling !== null &&
-                            ebIndexOptions.blockLevelElements.includes(previousElementSibling.tagName) &&
-                            ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
+          if (nextElementSibling !== null &&
+            ebIndexOptions.blockLevelElements.includes(nextElementSibling.tagName)) {
             indexedElement = thisNode.nextElementSibling
             targetType = 'element'
             targetText = ''
@@ -358,9 +354,10 @@ function ebIndexGetComments () {
 function ebIndexInit () {
   'use strict'
 
-  // Don't run this if the targets are already loaded
-  // (e.g. by pre-processing)
-  if (document.querySelector('[data-index-targets]')) {
+  // Don't run this in Prince or if the targets
+  // are already loaded (e.g. by pre-processing)
+  if (document.querySelector('[data-index-targets]') ||
+      typeof Prince === 'object') {
     return
   }
 

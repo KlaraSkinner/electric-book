@@ -10,18 +10,30 @@ You should be able to throw a box around any block-level element (paragraphs, li
 
 About seven o'clock one hot summer evening a strange family moved into the little village of Middlesex. Nobody knew where they came from, or who they were. But the neighbors soon made up their minds what they thought of the strangers, for the father was very drunk. He could hardly walk up the rickety front steps of the old tumble-down house, and his thirteen-year-old son had to help him. Toward eight o'clock a pretty, capable-looking girl of twelve came out of the house and bought a loaf of bread at the baker's. And that was all the villagers learned about the newcomers that night.
 
+The default `.box` has a border and the same background colour as the page.
+{:.sidenote}
+
 "There are four children," said the bakeshop woman to her husband the next day, "and their mother is dead. They must have some money, for the girl paid for the bread with a dollar bill."
 {:.box}
 
 "Make them pay for everything they get," growled the baker, who was a hard man. "The father is nearly dead with drink now, and soon they will be only beggars."
 
+The shaded `.box.box-shaded` has a light-coloured border and background.
+{:.sidenote}
+
 This happened sooner than he thought. The next day the oldest boy and girl came to ask the bakeshop woman to come over. Their father was dead.
-{:.box}
+{:.box.box-shaded}
+
+The colour-reversed `.box.box-reversed` has an accent-coloured border and background with light text.
+{:.sidenote}
 
 She went over willingly enough, for someone had to go. But it was clear that she did not expect to be bothered with four strange children, with the bakery on her hands and two children of her own.
-{:.box}
+{:.box.box-reversed}
 
 "Haven't you any other folks?" she asked the children.
+
+Boxes can also be sidenotes, with the appropriate classes, such as this one, which has `.sidenote.box.box-reversed`.
+{:.sidenote.box.box-reversed}
 
 "We have a grandfather in Greenfield," spoke up the youngest child before his sister could clap her hand over his mouth.
 
@@ -117,3 +129,23 @@ Just as he did so he heard a heavy voice say, "Now, then, lass, git along!" Then
 "He will say he didn't meet us coming this way," thought Henry, "so they will hunt for us the other way. And that will give us time to cover a lot more ground."
 
 He dropped asleep just as the roosters all over the valley began to answer each other.
+
+### Expandable boxes
+
+Expandable boxes can be toggled open and closed. They allow you to group more content together on a page without overwhelming readers. They can contain an optional descriptive preview.
+
+<div class="expandable-box" markdown="1">
+
+#### **Expandable box** A box that can expand
+
+<div class="expandable-box-preview" markdown="1">
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam pulvinar condimentum dui a ullamcorper. Integer eu purus in dui gravida luctus. Nulla imperdiet ante odio, vitae feugiat quam rhoncus sit amet. Phasellus porta leo at massa semper, et placerat erat posuere. Etiam suscipit eu justo a tempus.
+
+</div>
+
+Suspendisse potenti. Vivamus dapibus eu lorem ut posuere. Vivamus at volutpat justo, eget efficitur sapien. Nunc ac bibendum lacus. Nunc egestas auctor ex, id aliquam erat convallis a. Etiam ac dui sed erat dictum vehicula vitae sit amet augue. Maecenas malesuada orci nisi, non aliquet elit fringilla at. Aliquam vitae dui at nisl elementum ullamcorper at ac ligula. Duis tristique sollicitudin ex, id mollis lacus pretium sed.
+
+Ut odio nulla, tempor ac felis vitae, mollis luctus enim. Nam in elit ut ipsum hendrerit tincidunt. Maecenas condimentum sit amet lacus ut lacinia. Nulla facilisi. Vivamus ut malesuada dui, vitae blandit sem. Pellentesque venenatis malesuada orci non convallis. Mauris id commodo felis. Curabitur urna massa, volutpat quis elementum at, imperdiet vitae lorem. Aliquam blandit finibus nunc, at bibendum urna elementum a. Cras ut sapien vitae purus semper scelerisque non sit amet enim. Nam pharetra magna risus, id interdum sapien posuere sit amet. Pellentesque id dui erat. Aliquam ac condimentum metus. Proin sit amet consequat velit. Nunc mauris est, accumsan nec volutpat egestas, eleifend ac nulla. 
+
+</div>

@@ -53,16 +53,25 @@ $pdf-title-pages: true !default;
 		.title-page-logo, 
 		.titlepage-logo {
 			display: block; // In case the class is applied to the image, not the paragraph
-			width: $title-page-logo-width;
+			font-family: $title-page-logo-font;
+			font-size: $title-page-logo-font-size;
 			position: absolute;
 			text-align: center;
 			bottom: 0;
-		//	Now we'll center the block on the page
+			//	Now we'll center the block on the page
 			transform: translateX(-50%);
 		    margin-left: 50%;
-			img {
-				width: 100%;
+
+			img, svg {
+				width: $title-page-logo-width;
 			}
+		}
+
+		// If the class is applied to the image directly,
+		// rather than its container
+		img.title-page-logo,
+		svg.titlepage-logo {
+			width: $title-page-logo-width;
 		}
 	}
 

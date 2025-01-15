@@ -1,4 +1,4 @@
-/* global SVGInject */
+/* global MutationObserver, settings, SVGInject */
 
 // This script helps get sensible SVGs into our pages.
 // It first injects all SVGs linked as img tags
@@ -80,11 +80,12 @@ function ebSVGInjectImageData (img) {
   // - otherwise use alt text as the title, and omit the desc,
   //   which would simply duplicate the title.
 
-  let title, desc
+  let title, desc, role
 
   // Get a description for the SVG <desc>
   if (img.alt) {
     desc = img.alt
+    role = 'img'
   }
 
   // Get text for the SVG <title>
@@ -96,11 +97,14 @@ function ebSVGInjectImageData (img) {
   } else if (img.alt) {
     title = img.alt
     desc = ''
+  } else {
+    role = 'presentation'
   }
 
   return {
     title,
-    desc
+    desc,
+    role
   }
 }
 
@@ -117,25 +121,43 @@ function ebSVGInjectTitleDesc (svg, imgData) {
   // if a shorter title exists in the form of a figure caption.
 
   if (imgData.desc) {
+    // If the img tag has an alt="" attribute,
+    // that will override any <desc> in the original SVG.
     if (svg.querySelector('desc')) {
       svg.querySelector('desc').remove()
     }
 
-    svg.desc = imgData.desc
     const descElement = document.createElementNS('http://www.w3.org/2000/svg', 'desc')
     descElement.textContent = imgData.desc
     svg.insertAdjacentElement('afterbegin', descElement)
   }
 
   if (imgData.title) {
+    // If the img tag has a title="" attribute,
+    // that will override any <title> in the original SVG.
     if (svg.querySelector('title')) {
       svg.querySelector('title').remove()
     }
 
-    svg.title = imgData.title
     const titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title')
     titleElement.textContent = imgData.title
     svg.insertAdjacentElement('afterbegin', titleElement)
+  }
+
+  if (imgData.role) {
+    // If the img tag has a role="" attribute,
+    // apply that to the SVG element, too
+    if (!svg.getAttribute('role')) {
+      svg.setAttribute('role', imgData.role)
+
+      // We can't use aria-labelledby=title here, because
+      // we don't have a way to assign an ID to the title
+      // that will definitely be unique in the surrounding document.
+      // So we use aria-label, risking screen-reading duplication.
+      if (imgData.title) {
+        svg.setAttribute('aria-label', imgData.title)
+      }
+    }
   }
 }
 
@@ -167,5 +189,51 @@ function ebInjectSVGs () {
   })
 }
 
+// Check if the document is ready for testing images
+function ebReadyForTestingImages () {
+  const readyForTestingImages = document.body.getAttribute('data-testing-images')
+  if (readyForTestingImages) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// Wait for testing images to be loaded
+function ebWaitForTestingImages () {
+  'use strict'
+  console.log('Waiting for any test images to load ...')
+
+  if (ebReadyForTestingImages()) {
+    ebInjectSVGs()
+  } else {
+    const testingImagesObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        if (mutation.type === 'attributes' && ebReadyForTestingImages()) {
+          console.log('Testing images loaded. Starting SVG injection.')
+          ebInjectSVGs()
+          testingImagesObserver.disconnect()
+        }
+      })
+    })
+
+    testingImagesObserver.observe(document.body, {
+      attributes: true // listen for attribute changes
+    })
+  }
+}
+
 // Go
-ebInjectSVGs()
+// Do not try to inject SVGs if the page
+// is not running on http, because CORS will
+// not allow SVG injection except on http.
+if ((window.location.protocol).includes('http')) {
+  if (settings.remoteMedia.testing &&
+      settings.remoteMedia.testing.length > 0) {
+    // Wait for testing images to load
+    // before injecting SVGs
+    ebWaitForTestingImages()
+  } else {
+    ebInjectSVGs()
+  }
+}

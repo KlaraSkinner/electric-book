@@ -39,7 +39,17 @@ Do not add classes to <body>, because in PDF output
 separate HTML files are merged into one body element.
 {% endcomment %}
 
-<body>
+<body
+
+    {% comment %} Some scripts wait for `data-index-targets` to be ready.
+    If we are not using a dynamic index, index targets
+    will never be loaded, so we confirm that here. {% endcomment %}
+    {% if site.data.settings.dynamic-indexing == false %}
+        data-index-targets="none"
+    {% endif %}
+
+    >
+
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         {% if page.header %}data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}
         {% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}
@@ -48,6 +58,7 @@ separate HTML files are merged into one body element.
         {% if site.data.settings.print-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -83,7 +94,10 @@ separate HTML files are merged into one body element.
     {% include head-elements.html %}
 
 </head>
-<body>
+<body
+    {% if site.data.settings.dynamic-indexing == false %}
+        data-index-targets="none"
+    {% endif %}>
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         {% if page.header %} data-header="{{ page.header }}"{% else %} data-header="{{ page.title }}"{% endif %}
         {% if page.header-left %} data-header-left="{{ page.header-left }}"{% else %} data-header-left="{{ page.title }}"{% endif %}
@@ -92,6 +106,7 @@ separate HTML files are merged into one body element.
         {% if site.data.settings.screen-pdf.notes == "footnotes" or page.notes == "footnotes" %} data-page-footnotes{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
         data-creator="{% if creator %}{{ creator }}{% else %}{{ project.project-organisation }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -141,9 +156,13 @@ separate HTML files are merged into one body element.
     {% include head-elements.html %}
 
 </head>
-<body>
+<body
+    {% if site.data.settings.dynamic-indexing == false %}
+        data-index-targets="none"
+    {% endif %}>
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}"
         data-title="{% if book-title %}{{ book-title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -207,11 +226,15 @@ separate HTML files are merged into one body element.
     {% include head-elements.html %}
 
     </head>
-    <body>
+    <body
+        {% if site.data.settings.dynamic-indexing == false %}
+            data-index-targets="none"
+        {% endif %}>
         <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 
@@ -239,7 +262,7 @@ separate HTML files are merged into one body element.
     https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls
     {% endcomment %}
     {% if site.canonical-url and site.canonical-url != "" %}
-        <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.canonical-url }}">
+        <link rel="canonical" href="{{ page.url | replace:'/index.html','/' | prepend: site.baseurl | prepend: site.canonical-url }}">
     {% endif %}
 
     {% comment %} Add favicon {% endcomment %}
@@ -289,11 +312,15 @@ separate HTML files are merged into one body element.
     {% include head-elements.html %}
 
 </head>
-<body>
+<body
+    {% if site.data.settings.dynamic-indexing == false %}
+        data-index-targets="none"
+    {% endif %}>
     <div class="wrapper {{ book-directory }} {{ page.style }}{% if is-homepage == true %} home{% endif %}{% if is-search == true %} search-page{% endif %}{% if is-project-search == true %} project-search-page{% endif %}{% if is-book-search == true %} book-search-page{% endif %}"
         {% if page.accordion %}data-accordion-page="{{ page.accordion }}"{% endif %}
         {% if page.accordion-level and page.accordion-level != "" %}data-accordion-level="{{ page.accordion-level }}"{% endif %}
         data-title="{% if title %}{{ title }}{% else %}{{ page.title }}{% endif %}"
+        data-book-directory="{{ book-directory }}"
         {% if is-translation %} data-translation="{{ language }}"{% endif %}>
 
 {% endif %}
